@@ -29,11 +29,11 @@ public class MyLinkedList<T> implements MyListInterface<T> {
 
   @Override
   public void add(T element) {
-    add(element, size);
+    add(size, element);
   }
 
   @Override
-  public void add(T element, int index) {
+  public void add(int index, T element) {
     MyLinkedListNode<T> node = new MyLinkedListNode<>(element, null);
 
     size++;
@@ -51,7 +51,7 @@ public class MyLinkedList<T> implements MyListInterface<T> {
   }
 
   @Override
-  public void set(T element, int index) {
+  public void set(int index, T element) {
     if (index < 0 || index >= size) {
       throw new IndexOutOfBoundsException();
     }
