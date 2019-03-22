@@ -90,12 +90,12 @@ public class MyLinkedList<T> implements MyListInterface<T> {
   }
 
   @Override
-  public void remove(T element) {
-    remove(indexOf(element).orElseThrow(NoSuchElementException::new));
+  public void removeElement(T element) {
+    removeElementByIndex(indexOf(element).orElseThrow(NoSuchElementException::new));
   }
 
   @Override
-  public void remove(int index) {
+  public void removeElementByIndex(int index) {
     if (index < 0 || index >= size) {
       throw new IndexOutOfBoundsException();
     }
