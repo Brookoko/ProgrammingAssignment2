@@ -28,9 +28,9 @@ public class MyLinkedListTests {
   public void testAddByIndex() {
     MyLinkedList<Integer> list = new MyLinkedList<>();
 
-    list.add(42, 0);
-    list.add(-1, 0);
-    list.add(0, 2);
+    list.add(0, 42);
+    list.add(0, -1);
+    list.add(2, 0);
     list.add(1, 1);
     assertEquals(4, list.getSize());
 
@@ -44,17 +44,17 @@ public class MyLinkedListTests {
   public void testSet() {
     MyLinkedList<Integer> list = new MyLinkedList<>();
 
-    list.add(42, 0);
+    list.add(0, 42);
     assertEquals(42, list.get(0).intValue());
-    list.set(10, 0);
+    list.set(0, 10);
     assertEquals(10, list.get(0).intValue());
 
     list.add(2);
     list.add(3);
 
     assertEquals(2, list.get(1).intValue());
-    list.set(7, 1);
-    list.set(8, 2);
+    list.set(1, 7);
+    list.set(2, 8);
     assertEquals(7, list.get(1).intValue());
     assertEquals(8, list.get(2).intValue());
   }
@@ -63,9 +63,9 @@ public class MyLinkedListTests {
   public void testSetOutOfBounds() {
     MyLinkedList<Integer> list = new MyLinkedList<>();
 
-    list.add(42, 0);
+    list.add(0, 42);
     assertEquals(1, list.getSize());
-    list.set(1, 1000);
+    list.set(1000, 1);
   }
 
   @Test(expected = IndexOutOfBoundsException.class)

@@ -27,7 +27,7 @@ public interface MyListInterface<T> extends Iterable<T> {
    * @param index position to insert to
    * @throws IndexOutOfBoundsException if index is out of bounds of this list
    */
-  public void add(T element, int index);
+  public void add(int index, T element);
 
   /**
    * Replace the element at index <tt>index</tt> with <tt>element</tt>.
@@ -36,7 +36,7 @@ public interface MyListInterface<T> extends Iterable<T> {
    * @param index index to set to
    * @throws IndexOutOfBoundsException if index is out of bounds of this list
    */
-  public void set(T element, int index);
+  public void set(int index, T element);
 
   /**
    * Get element with specified index from this list.
