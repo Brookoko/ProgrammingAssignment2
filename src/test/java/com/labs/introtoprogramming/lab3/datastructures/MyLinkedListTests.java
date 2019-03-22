@@ -86,7 +86,7 @@ public class MyLinkedListTests {
     list.add("d");
     assertEquals(4, list.getSize());
 
-    list.remove("c");
+    list.removeElement("c");
     assertEquals(3, list.getSize());
 
     assertEquals("a", list.get(0));
@@ -104,7 +104,7 @@ public class MyLinkedListTests {
     list.add("d");
     assertEquals(4, list.getSize());
 
-    list.remove("e");
+    list.removeElement("e");
   }
 
   @Test
@@ -117,7 +117,7 @@ public class MyLinkedListTests {
     list.add("d");
     assertEquals(4, list.getSize());
 
-    list.remove(2);
+    list.removeElementByIndex(2);
     assertEquals(3, list.getSize());
 
     assertEquals("a", list.get(0));
@@ -135,7 +135,7 @@ public class MyLinkedListTests {
     list.add("d");
     assertEquals(4, list.getSize());
 
-    list.remove(1000);
+    list.removeElementByIndex(1000);
   }
 
   @Test
@@ -145,7 +145,7 @@ public class MyLinkedListTests {
     list.add("foobar");
     assertEquals(1, list.getSize());
 
-    list.remove(0);
+    list.removeElementByIndex(0);
     assertEquals(0, list.getSize());
   }
 

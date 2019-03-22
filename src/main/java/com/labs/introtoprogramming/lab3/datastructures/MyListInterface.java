@@ -48,12 +48,12 @@ public interface MyListInterface<T> extends Iterable<T> {
   public T get(int index);
 
   /**
-   * Find element in the list and remove it.
+   * Find element in the list and removeElement it.
    *
    * @param element element to be removed
    * @throws java.util.NoSuchElementException if element is not found
    */
-  public void remove(T element);
+  public void removeElement(T element);
 
   /**
    * Remove element at specified index.
@@ -61,7 +61,7 @@ public interface MyListInterface<T> extends Iterable<T> {
    * @param index index of element to be removed
    * @throws IndexOutOfBoundsException if index is out of bounds of this list
    */
-  public void remove(int index);
+  public void removeElementByIndex(int index);
 
   /**
    * Find element in this list.
