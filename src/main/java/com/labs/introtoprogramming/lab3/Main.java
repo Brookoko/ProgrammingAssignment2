@@ -1,4 +1,4 @@
-package com.labs.introtoprogremming.lab3;
+package com.labs.introtoprogramming.lab3;
 
 import com.labs.introtoprogramming.lab3.datastructures.MyHashTable;
 
@@ -14,9 +14,10 @@ public class Main {
   private static MyHashTable<String, String> dictionary;
   private static final String DELIMITER = "----------------------------------------------------------------";
   private static final String INPUT_FILE_NAME = "dict_processed.txt";
+  private static final int DICTIONARY_CAPACITY= 100000;
 
   public static void main(String[] args) {
-    dictionary = new MyHashTable<>(10000000);
+    dictionary = new MyHashTable<>(DICTIONARY_CAPACITY);
     File file = new File(INPUT_FILE_NAME);
     loadToDictionary(file, dictionary);
   }
@@ -31,7 +32,7 @@ public class Main {
     try {
       loadToDictionary(new FileInputStream(file), dict);
     } catch (IOException e) {
-      System.out.println("Failed to read file");
+      System.err.println("Failed to read file");
       e.printStackTrace();
       System.exit(1);
     }
@@ -60,8 +61,11 @@ public class Main {
           dict.put(token, content.toString());
         }
         token = line;
-        content = new StringBuilder();
-      } else if (!line.isEmpty()) content.append("\n").append(line);
+        content.setLength(0);
+      } else if (!line.isEmpty()) {
+        content.append("\n")
+                .append(line);
+      }
     }
     bf.close();
   }
@@ -74,8 +78,8 @@ public class Main {
    */
   private static boolean isLineUpperCase(String line) {
     if (line.isEmpty()) return false;
-    for (int i = 0; i < line.length(); i++) {
-      if (Character.isLowerCase(line.charAt(i))) return false;
+    for (char c : line.toCharArray()) {
+      if (Character.isLowerCase(c)) return false;
     }
     return true;
   }
