@@ -11,6 +11,7 @@ import java.util.Optional;
  * @author Nikita Volobuev
  * @see MyHashTableInterface
  */
+@SuppressWarnings("RV_ABSOLUTE_VALUE_OF_HASHCODE")
 public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   private static final int DEFAULT_CAPACITY = 100;
@@ -41,7 +42,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void put(K key, V value) {
-    int pos = Math.abs(key.hashCode()) % arr.length;
+    int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
       arr[pos] = new MyLinkedList<>();
@@ -53,7 +54,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public Optional<V> get(K key) {
-    int pos = Math.abs(key.hashCode()) % arr.length;
+    int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
       return Optional.empty();
@@ -70,7 +71,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public boolean containsKey(K key) {
-    int pos = Math.abs(key.hashCode()) % arr.length;
+    int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
       return false;
@@ -92,7 +93,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void remove(K key) {
-    int pos = key.hashCode() % arr.length;
+    int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
       return;
