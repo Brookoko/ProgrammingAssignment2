@@ -42,8 +42,8 @@ public interface MyListInterface<T> extends Iterable<T> {
    * Get element with specified index from this list.
    *
    * @param index index of element to get
-   * @throws IndexOutOfBoundsException if index is out of bounds of this list
    * @return element
+   * @throws IndexOutOfBoundsException if index is out of bounds of this list
    */
   public T get(int index);
 

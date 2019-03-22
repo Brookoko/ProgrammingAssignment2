@@ -68,8 +68,8 @@ public class MyLinkedList<T> implements MyListInterface<T> {
    * Get linked list node by index.
    *
    * @param index index of node to get
-   * @throws IndexOutOfBoundsException if specified index is out of list bounds
    * @return list node
+   * @throws IndexOutOfBoundsException if specified index is out of list bounds
    */
   private MyLinkedListNode<T> getNode(int index) {
     if (index < 0 || index > size) {
