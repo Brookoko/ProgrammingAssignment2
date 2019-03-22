@@ -25,16 +25,16 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
     }
   }
 
-  private MyLinkedList<MyHashTableElement<K, V>> arr[];
+  private MyLinkedList<MyHashTableElement<K, V>>[] arr;
   private int size = 0;
 
-  /** Creates hash table with specified capacity */
+  /** Creates hash table with specified capacity. */
   public MyHashTable(int capacity) {
     // noinspection unchecked
     this.arr = (MyLinkedList<MyHashTableElement<K, V>>[]) new MyLinkedList[capacity];
   }
 
-  /** Creates hash table with default capacity */
+  /** Creates hash table with default capacity. */
   public MyHashTable() {
     this(DEFAULT_CAPACITY);
   }
