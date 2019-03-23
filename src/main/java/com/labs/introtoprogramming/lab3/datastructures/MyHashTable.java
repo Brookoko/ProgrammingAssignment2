@@ -9,6 +9,7 @@ import java.util.Optional;
  * @param <V> the type of values in this hash table.
  *
  * @author Nikita Volobuev
+ * @author Bohdan Fedorchenko
  * @see MyHashTableInterface
  */
 @SuppressWarnings("RV_ABSOLUTE_VALUE_OF_HASHCODE")
