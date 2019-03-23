@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -126,8 +127,8 @@ public class Main {
     System.out.println("Print :q to leave");
     System.out.print("Type a sentence to get definition: ");
     Arrays.stream(scanner.nextLine().split(" ")).forEach(word -> {
-      String def = findWordInDictionary(word, dict);
-      if (def == null) {
+      Optional<String> def = findWordInDictionary(word, dict);
+      if (!def.isPresent()) {
         System.out.printf("%n%s; not found%n", word);
         return;
       }
@@ -141,8 +142,8 @@ public class Main {
       if (token.equals(TOKEN_TO_LEAVE)) {
         return;
       }
-      String def = findWordInDictionary(token, dict);
-      if (def == null) {
+      Optional<String> def = findWordInDictionary(token, dict);
+      if (!def.isPresent()) {
         System.out.printf("Sorry %s cannot be found%n", token);
       } else {
         System.out.printf("%s; %s%n", token, def);
@@ -155,9 +156,10 @@ public class Main {
    * Find word definition in dictionary.
    *
    * @param word word to search
-   * @return definition of word in dictionary or null if it is not there
+   * @return definition of word in dictionary or empty optional if it is not there
    */
-  private static String findWordInDictionary(String word, MyHashTable<String, String> dict) {
-    return dict.getOrDefault(word.toUpperCase(), null);
+  private static Optional<String> findWordInDictionary(String word,
+                                                       MyHashTable<String, String> dict) {
+    return dict.get(word.toUpperCase());
   }
 }
