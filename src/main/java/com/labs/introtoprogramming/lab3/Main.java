@@ -147,8 +147,34 @@ public class Main {
     msgOut.println("Print :q to leave");
     msgOut.print("Type a sentence to get definition: ");
 
-    String[] sentence = scanner.nextLine().split(" ");
-    msgOut.println();
+    printWordDefs(scanner.nextLine().split(" "), dict, defOut);
+
+    msgOut.print("Type a word to get definition: ");
+    while (scanner.hasNextLine()) {
+      String token = scanner.nextLine();
+
+      if (token.equals(TOKEN_TO_LEAVE)) {
+        return;
+      }
+
+      Optional<String> def = findWordInDictionary(token, dict);
+      if (!def.isPresent()) {
+        defOut.printf("Sorry %s cannot be found%n", token);
+      } else {
+        defOut.printf("%s; %s%n", token, def.get());
+      }
+      msgOut.print("Type a word to get definition: ");
+    }
+  }
+
+  /**
+   * Print definition for each word in sentence.
+   *
+   * @param sentence array of words
+   * @param dict dictionary of defs to use
+   * @param defOut print stream to print defs to
+   */
+  private static void printWordDefs(String[] sentence, MyHashTable<String, String> dict, PrintStream defOut) {
     Arrays.stream(sentence).forEach(word -> {
       Optional<String> def = findWordInDictionary(word, dict);
       if (!def.isPresent()) {
@@ -158,22 +184,6 @@ public class Main {
 
       defOut.printf("%s; %s%n", word, def.get());
     });
-
-    msgOut.print("Type a word to get definition: ");
-    while (scanner.hasNextLine()) {
-      String token = scanner.nextLine();
-
-      if (token.equals(TOKEN_TO_LEAVE)) {
-        return;
-      }
-      Optional<String> def = findWordInDictionary(token, dict);
-      if (!def.isPresent()) {
-        defOut.printf("Sorry %s cannot be found%n", token);
-      } else {
-        defOut.printf("%s; %s%n", token, def.get());
-      }
-      msgOut.print("Type a word to get definition: ");
-    }
   }
 
   /**
