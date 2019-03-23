@@ -176,4 +176,29 @@ public class MainTests {
          defOut.toString(StandardCharsets.UTF_8.name())
     );
   }
+
+  @Test
+  public void testGetRandomString() {
+    String line = Main.getRandomString(10);
+    assertEquals(10, line.length());
+    assertTrue(line.matches("[a-zA-z]+"));
+  }
+
+  @Test
+  public void testGetRandomStringEmpty() {
+    String line = Main.getRandomString(0);
+    assertTrue(line.isEmpty());
+  }
+
+  @Test
+  public void testGetRandomKeys() {
+    String[] keys = Main.getRandomKeys(10);
+    assertEquals(10, keys.length);
+  }
+
+  @Test
+  public void testGetRandomKeysEmpty() {
+    String[] keys = Main.getRandomKeys(0);
+    assertEquals(0, keys.length);
+  }
 }

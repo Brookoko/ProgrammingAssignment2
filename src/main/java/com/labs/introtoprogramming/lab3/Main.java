@@ -230,12 +230,12 @@ public class Main {
   }
 
   /**
-   * Create array of random string of alphabetic characters
+   * Create array of random string of alphabetic characters.
    *
    * @param amount amount of string in array
    * @return array of random string
    */
-  private static String[] getRandomKeys(int amount) {
+  static String[] getRandomKeys(int amount) {
     String[] keys = new String[amount];
     for (int i = 0; i < amount; i++) {
       keys[i] = getRandomString(new Random().nextInt(10));
@@ -249,7 +249,7 @@ public class Main {
    * @param length length of string
    * @return string of random alphabetic characters
    */
-  private static String getRandomString(int length) {
+  static String getRandomString(int length) {
     String alpha = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
     StringBuilder value = new StringBuilder();
     for (int i = 0; i < length; i++) {
