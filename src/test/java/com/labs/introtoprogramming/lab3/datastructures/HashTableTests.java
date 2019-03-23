@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import org.junit.Test;
 
 public class HashTableTests {
@@ -18,8 +19,8 @@ public class HashTableTests {
     myHashTable.put("b", 2);
     assertEquals(2, myHashTable.getSize());
 
-    assertEquals(2, myHashTable.get("b").orElseThrow(AssertionError::new).intValue());
-    assertEquals(1, myHashTable.get("a").orElseThrow(AssertionError::new).intValue());
+    assertEquals(2, myHashTable.get("b").get(0).intValue());
+    assertEquals(1, myHashTable.get("a").get(0).intValue());
     assertEquals(2, myHashTable.getSize());
   }
 
@@ -29,15 +30,17 @@ public class HashTableTests {
     myHashTable.put("a", 1);
     myHashTable.put("a", 2);
     myHashTable.put("a", 3);
-    assertEquals(1, myHashTable.getSize());
-    assertEquals(3, myHashTable.get("a").orElseThrow(AssertionError::new).intValue());
+    assertEquals(3, myHashTable.getSize());
+    assertTrue(myHashTable.get("a").contains(1));
+    assertTrue(myHashTable.get("a").contains(2));
+    assertTrue(myHashTable.get("a").contains(3));
   }
 
   @Test
   public void testGetNonExistingKey() {
     MyHashTable<String, Integer> myHashTable = new MyHashTable<>();
     assertEquals(0, myHashTable.getSize());
-    assertFalse(myHashTable.get("foobar").isPresent());
+    assertEquals(0, myHashTable.get("foobar").size());
   }
 
   @Test
@@ -48,7 +51,7 @@ public class HashTableTests {
     myHashTable.put("b", 2);
     myHashTable.put("c", 3);
     assertEquals(3, myHashTable.getSize());
-    assertFalse(myHashTable.get("foobar").isPresent());
+    assertEquals(0, myHashTable.get("foobar").size());
   }
 
   @Test
@@ -59,7 +62,7 @@ public class HashTableTests {
     myHashTable.put("b", 2);
     myHashTable.put("c", 3);
     assertEquals(3, myHashTable.getSize());
-    assertEquals(42, myHashTable.getOrDefault("foobar", 42).intValue());
+    assertEquals(42, myHashTable.getOrDefault("foobar", Collections.singletonList(42)).get(0).intValue());
   }
 
   @Test
