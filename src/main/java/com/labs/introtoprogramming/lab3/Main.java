@@ -174,7 +174,11 @@ public class Main {
    * @param dict dictionary of defs to use
    * @param defOut print stream to print defs to
    */
-  private static void printWordDefs(String[] sentence, MyHashTable<String, String> dict, PrintStream defOut) {
+  private static void printWordDefs(
+          String[] sentence,
+          MyHashTable<String, String> dict,
+          PrintStream defOut
+  ) {
     Arrays.stream(sentence).forEach(word -> {
       Optional<String> def = findWordInDictionary(word, dict);
       if (!def.isPresent()) {
