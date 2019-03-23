@@ -6,8 +6,8 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.Arrays;
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -18,23 +18,19 @@ public class MainTests {
           + "Def: something\n"
           + "B\n"
           + "Def: else";
-
   private static final String EMPTY_INPUT = "";
-
   private static final String EMPTY_DEFINITION_INPUT = "A\n";
-
   private static final String EQUAL_WORDS_INPUT = "A\n"
           + "Def: something\n"
           + "A\n"
           + "Def: else";
-
-  private static final ArrayList<String> DUMMY_LINES = new ArrayList<String>() {{
-    add("UPPER");
-    add("lower");
-    add("UoPeR");
-    add("");
-    add("1.$/");
-  }};
+  private static final List<String> DUMMY_LINES = Arrays.asList(
+    "UPPER",
+    "lower",
+    "UoPeR",
+    "",
+    "1.$/"
+  );
 
   @Test
   public void testLoadToDictionary() throws IOException {
