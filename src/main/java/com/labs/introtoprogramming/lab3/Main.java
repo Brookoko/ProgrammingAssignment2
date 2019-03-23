@@ -162,7 +162,6 @@ public class Main {
     msgOut.print("Type a word to get definition: ");
     while (scanner.hasNextLine()) {
       String token = scanner.nextLine();
-      msgOut.println();
 
       if (token.equals(TOKEN_TO_LEAVE)) {
         return;
