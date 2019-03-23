@@ -6,10 +6,14 @@ import static org.junit.Assert.assertFalse;
 
 import com.labs.introtoprogramming.lab3.datastructures.MyHashTable;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import org.junit.Test;
 
 public class MainTests {
@@ -134,5 +138,42 @@ public class MainTests {
   public void testIsLineUpperCaseNotAlpha() {
     boolean res = Main.isLineUpperCase(DUMMY_LINES.get(4));
     assertTrue(res);
+  }
+
+  @Test
+  public void testProcessUserInput() throws UnsupportedEncodingException {
+    MyHashTable<String, String> defs = new MyHashTable<>();
+    defs.put("HELLO", "greeting");
+    defs.put("WORLD", "universe");
+    defs.put("WORD", "element of speech");
+
+    ByteArrayOutputStream msgOut = new ByteArrayOutputStream();
+    ByteArrayOutputStream defOut = new ByteArrayOutputStream();
+
+    byte[] inputBytes = "hello world unknown\nword\nnothing\n:q".getBytes(StandardCharsets.UTF_8);
+    new ByteArrayInputStream(inputBytes);
+            Main.processUserInput(
+            defs,
+            new ByteArrayInputStream(inputBytes),
+            new PrintStream(msgOut, true, StandardCharsets.UTF_8.name()),
+            new PrintStream(defOut, true, StandardCharsets.UTF_8.name())
+    );
+
+    assertEquals(
+            "Print :q to leave\n"
+            + "Type a sentence to get definition: \n"
+            + "Type a word to get definition: \n"
+            + "Type a word to get definition: \n"
+            + "Type a word to get definition: \n",
+            msgOut.toString(StandardCharsets.UTF_8.name())
+    );
+    assertEquals(
+            "hello; greeting\n"
+            + "world; universe\n"
+            + "unknown; not found\n"
+            + "word; element of speech\n"
+            + "Sorry nothing cannot be found\n",
+            defOut.toString(StandardCharsets.UTF_8.name())
+    );
   }
 }

@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
@@ -120,35 +121,59 @@ public class Main {
 
   /**
    * Process user input to get word definition from dictionary.
+   * Input is read from System.in
    *
+   * @param dict word definition dictionary to use
    */
   private static void processUserInput(MyHashTable<String, String> dict) {
-    Scanner scanner = new Scanner(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-    System.out.println("Print :q to leave");
-    System.out.print("Type a sentence to get definition: ");
-    Arrays.stream(scanner.nextLine().split(" ")).forEach(word -> {
+    processUserInput(dict, System.in, System.out, System.out);
+  }
+
+  /**
+   * Process user input to get word definition from dictionary.
+   *
+   * @param dict word definition dictionary to use
+   * @param in input stream to read user input from
+   * @param msgOut print stream to print messages to user
+   * @param defOut print stream to print definitions to
+   */
+  static void processUserInput(
+          MyHashTable<String, String> dict,
+          InputStream in,
+          PrintStream msgOut,
+          PrintStream defOut
+  ) {
+    Scanner scanner = new Scanner(new InputStreamReader(in, StandardCharsets.UTF_8));
+    msgOut.println("Print :q to leave");
+    msgOut.print("Type a sentence to get definition: ");
+
+    String[] sentence = scanner.nextLine().split(" ");
+    msgOut.println();
+    Arrays.stream(sentence).forEach(word -> {
       Optional<String> def = findWordInDictionary(word, dict);
       if (!def.isPresent()) {
-        System.out.printf("%n%s; not found%n", word);
+        defOut.printf("%s; not found%n", word);
         return;
       }
 
-      System.out.printf("%n%s; %s", word, def);
+      defOut.printf("%s; %s%n", word, def.get());
     });
 
-    System.out.print("\nType a word to get definition: ");
-    String token;
-    while ((token = scanner.nextLine()) != null) {
+    msgOut.print("Type a word to get definition: ");
+    while (scanner.hasNextLine()) {
+      String token = scanner.nextLine();
+      msgOut.println();
+
       if (token.equals(TOKEN_TO_LEAVE)) {
         return;
       }
       Optional<String> def = findWordInDictionary(token, dict);
       if (!def.isPresent()) {
-        System.out.printf("Sorry %s cannot be found%n", token);
+        defOut.printf("Sorry %s cannot be found%n", token);
       } else {
-        System.out.printf("%s; %s%n", token, def);
+        defOut.printf("%s; %s%n", token, def.get());
       }
-      System.out.print("Type a word to get definition: ");
+      msgOut.print("Type a word to get definition: ");
     }
   }
 
