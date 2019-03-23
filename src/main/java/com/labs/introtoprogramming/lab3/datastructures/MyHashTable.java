@@ -51,13 +51,15 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
     if (size >= capacity * LOAD_FACTOR_TO_RESIZE) {
       resize(capacity * SCALE_FACTOR);
     }
+
+    remove(key);
+
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
       arr[pos] = new MyLinkedList<>();
     }
 
-    remove(key);
     arr[pos].add(new MyHashTableElement<>(key, value));
     size++;
   }
