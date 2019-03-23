@@ -161,10 +161,10 @@ public class MainTests {
 
     assertEquals(
             "Print :q to leave\n"
-            + "Type a sentence to get definition: \n"
-            + "Type a word to get definition: \n"
-            + "Type a word to get definition: \n"
-            + "Type a word to get definition: \n",
+            + "Type a sentence to get definition: "
+            + "Type a word to get definition: "
+            + "Type a word to get definition: "
+            + "Type a word to get definition: ",
             msgOut.toString(StandardCharsets.UTF_8.name())
     );
     assertEquals(
