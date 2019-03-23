@@ -152,28 +152,28 @@ public class MainTests {
 
     byte[] inputBytes = "hello world unknown\nword\nnothing\n:q".getBytes(StandardCharsets.UTF_8);
     new ByteArrayInputStream(inputBytes);
-            Main.processUserInput(
-            defs,
-            new ByteArrayInputStream(inputBytes),
-            new PrintStream(msgOut, true, StandardCharsets.UTF_8.name()),
-            new PrintStream(defOut, true, StandardCharsets.UTF_8.name())
+    Main.processUserInput(
+        defs,
+        new ByteArrayInputStream(inputBytes),
+        new PrintStream(msgOut, true, StandardCharsets.UTF_8.name()),
+        new PrintStream(defOut, true, StandardCharsets.UTF_8.name())
     );
 
     assertEquals(
-            "Print :q to leave\n"
-            + "Type a sentence to get definition: "
-            + "Type a word to get definition: "
-            + "Type a word to get definition: "
-            + "Type a word to get definition: ",
-            msgOut.toString(StandardCharsets.UTF_8.name())
+        "Print :q to leave\n"
+        + "Type a sentence to get definition: "
+        + "Type a word to get definition: "
+        + "Type a word to get definition: "
+        + "Type a word to get definition: ",
+        msgOut.toString(StandardCharsets.UTF_8.name())
     );
     assertEquals(
-            "hello; greeting\n"
-            + "world; universe\n"
-            + "unknown; not found\n"
-            + "word; element of speech\n"
-            + "Sorry nothing cannot be found\n",
-            defOut.toString(StandardCharsets.UTF_8.name())
+         "hello; greeting\n"
+         + "world; universe\n"
+         + "unknown; not found\n"
+         + "word; element of speech\n"
+         + "Sorry nothing cannot be found\n",
+         defOut.toString(StandardCharsets.UTF_8.name())
     );
   }
 }
