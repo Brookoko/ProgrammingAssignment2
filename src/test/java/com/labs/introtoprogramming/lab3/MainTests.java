@@ -1,17 +1,17 @@
 package com.labs.introtoprogramming.lab3;
 
 import com.labs.introtoprogramming.lab3.datastructures.MyHashTable;
-import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import org.junit.Test;
 
 public class MainTests {
   private static final String EXPECTED_INPUT = "A\n"
@@ -25,11 +25,11 @@ public class MainTests {
           + "A\n"
           + "Def: else";
   private static final List<String> DUMMY_LINES = Arrays.asList(
-    "UPPER",
-    "lower",
-    "UoPeR",
-    "",
-    "1.$/"
+          "UPPER",
+          "lower",
+          "UoPeR",
+          "",
+          "1.$/"
   );
 
   @Test
@@ -72,7 +72,8 @@ public class MainTests {
             dict
     );
     assertEquals(1, dict.getSize());
-    assertEquals("\nDef: something\n" + Main.DELIMITER + "\nDef: else", dict.getOrDefault("A", null));
+    assertEquals("\nDef: something\n" + Main.DELIMITER + "\nDef: else",
+            dict.getOrDefault("A", null));
   }
 
   @Test
@@ -103,7 +104,7 @@ public class MainTests {
     Main.addToDictionary("A", new StringBuilder("1"), dict);
     Main.addToDictionary("A", new StringBuilder("2"), dict);
     assertEquals(1, dict.getSize());
-    assertEquals("1\n" + Main.DELIMITER  +"2", dict.getOrDefault("A", ""));
+    assertEquals("1\n" + Main.DELIMITER  + "2", dict.getOrDefault("A", ""));
   }
 
   @Test

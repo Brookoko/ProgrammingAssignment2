@@ -48,7 +48,9 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void put(K key, V value) {
-    if (size >= capacity * LOAD_FACTOR_TO_RESIZE) resize(capacity * SCALE_FACTOR);
+    if (size >= capacity * LOAD_FACTOR_TO_RESIZE) {
+      resize(capacity * SCALE_FACTOR);
+    }
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
@@ -100,7 +102,9 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void remove(K key) {
-    if (size > 0 && size <= capacity * LOAD_FACTOR_TO_DECREASE) resize(capacity / (2 * SCALE_FACTOR));
+    if (size > 0 && size <= capacity * LOAD_FACTOR_TO_DECREASE) {
+      resize(capacity / (2 * SCALE_FACTOR));
+    }
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {

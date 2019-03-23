@@ -12,11 +12,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
-  static final String DELIMITER = "----------------------------------------------------------------";
+  static final String DELIMITER =
+          "----------------------------------------------------------------";
   private static final String INPUT_FILE_NAME = "dict_processed.txt";
-  private static final int DICTIONARY_CAPACITY= 100000;
+  private static final int DICTIONARY_CAPACITY = 100000;
   private static final String TOKEN_TO_LEAVE = ":q";
 
+  /**
+   * This starts application.
+   * Input file is read and parse. Then words definition load to hash table
+   * and user can find them via standard input/output stream
+   */
   public static void main(String[] args) {
     MyHashTable<String, String> dictionary = new MyHashTable<>(DICTIONARY_CAPACITY);
     File file = new File(INPUT_FILE_NAME);
@@ -25,7 +31,7 @@ public class Main {
   }
 
   /**
-   * Load to dictionary from file
+   * Load to dictionary from file.
    *
    * @param file file with words and their definition (txt)
    * @param dict hast table to which load words
@@ -67,7 +73,7 @@ public class Main {
   }
 
   /**
-   * Add new definition to dictionary
+   * Add new definition to dictionary.
    *
    * @param token word to add
    * @param content definition of word
@@ -86,21 +92,21 @@ public class Main {
   }
 
   /**
-   * Check is string consists only of uppercase characters
+   * Check is string consists only of uppercase characters.
    *
    * @param line string to be checked
    * @return true if string consist only of uppercase characters
    */
   static boolean isLineUpperCase(String line) {
-    if (line.isEmpty()) return false;
+    if (line.isEmpty()) { return false; }
     for (char c : line.toCharArray()) {
-      if (Character.isLowerCase(c)) return false;
+      if (Character.isLowerCase(c)) { return false; }
     }
     return true;
   }
 
   /**
-   * Process user input to get word definition from dictionary
+   * Process user input to get word definition from dictionary.
    *
    */
   private static void processUserInput(MyHashTable<String, String> dict) {
@@ -110,7 +116,7 @@ public class Main {
     System.out.print("\nType a sentence to get definition: ");
 
     while ((token = scanner.nextLine()) != null) {
-      if (token.equals(TOKEN_TO_LEAVE)) return;
+      if (token.equals(TOKEN_TO_LEAVE)) { return; }
       String def = findWordInDictionary(token, dict);
       if (def == null) {
         System.out.printf("Sorry %s cannot be found", token);
@@ -123,7 +129,7 @@ public class Main {
   }
 
   /**
-   * Find word definition in dictionary
+   * Find word definition in dictionary.
    *
    * @param word word to search
    * @return definition of word in dictionary or null if it is not there
