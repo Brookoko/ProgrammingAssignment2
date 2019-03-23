@@ -47,13 +47,16 @@ public class Main {
   }
 
   /**
-   * Load to dictionary from txt data input stream
+   * Load to dictionary from txt data input stream.
    *
    * @param in input stream with words definition data
    * @param dict hash table to which load words
    * @throws IOException if stream read failed
    */
-  static void loadToDictionary(InputStream in, MyHashTable<String, String> dict) throws IOException {
+  static void loadToDictionary(
+          InputStream in,
+          MyHashTable<String, String> dict
+  ) throws IOException {
     BufferedReader bf = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
     String line;
     String token = "";
@@ -79,7 +82,11 @@ public class Main {
    * @param content definition of word
    * @param dict dictionary to add
    */
-  static void addToDictionary(String token, StringBuilder content, MyHashTable<String, String> dict) {
+  static void addToDictionary(
+          String token,
+          StringBuilder content,
+          MyHashTable<String,String> dict
+  ) {
     if (!token.isEmpty() && content.length() != 0) {
       if (dict.containsKey(token)) {
         content.insert(0, DELIMITER)
@@ -98,9 +105,13 @@ public class Main {
    * @return true if string consist only of uppercase characters
    */
   static boolean isLineUpperCase(String line) {
-    if (line.isEmpty()) { return false; }
+    if (line.isEmpty()) {
+      return false;
+    }
     for (char c : line.toCharArray()) {
-      if (Character.isLowerCase(c)) { return false; }
+      if (Character.isLowerCase(c)) {
+        return false;
+      }
     }
     return true;
   }

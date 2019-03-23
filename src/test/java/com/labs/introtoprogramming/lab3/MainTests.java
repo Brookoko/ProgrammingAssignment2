@@ -1,11 +1,10 @@
 package com.labs.introtoprogramming.lab3;
 
-import com.labs.introtoprogramming.lab3.datastructures.MyHashTable;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
+import com.labs.introtoprogramming.lab3.datastructures.MyHashTable;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
