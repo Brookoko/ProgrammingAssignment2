@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Main {
   static final String DELIMITER = "----------------------------------------------------------------";
-  private static final String INPUT_FILE_NAME = "tests.txt";
+  private static final String INPUT_FILE_NAME = "dict_processed.txt";
   private static final int DICTIONARY_CAPACITY= 100000;
   private static final String TOKEN_TO_LEAVE = ":q";
 
@@ -104,7 +104,7 @@ public class Main {
    *
    */
   private static void processUserInput(MyHashTable<String, String> dict) {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(new InputStreamReader(System.in, StandardCharsets.UTF_8));
     String token;
     System.out.println("Print :q to leave");
     System.out.print("\nType a sentence to get definition: ");
