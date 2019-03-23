@@ -12,6 +12,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -31,6 +32,10 @@ public class Main {
     File file = new File(INPUT_FILE_NAME);
     loadToDictionary(file, dictionary);
     processUserInput(dictionary);
+    
+    MyHashTable<String, Integer> testTable = new MyHashTable<>();
+    long res = benchmark(testTable, 1000000);
+    System.out.println(res);
   }
 
   /**
@@ -199,5 +204,40 @@ public class Main {
   private static Optional<String> findWordInDictionary(String word,
                                                        MyHashTable<String, String> dict) {
     return dict.get(word.toUpperCase());
+  }
+
+
+  private static long benchmark(MyHashTable<String, Integer> dict, int testNum) {
+    String[] keys = getRandomKeys(testNum);
+    long[] time = new long[testNum];
+
+    for (int i = 0; i < testNum; i++) {
+      dict.put(keys[i], i);
+    }
+
+    for (int i = 0; i < testNum; i++) {
+      long start = System.nanoTime();
+      dict.get(keys[i]);
+      time[i] = System.nanoTime() - start;
+    }
+
+    return Arrays.stream(time).sum() / testNum;
+  }
+
+  private static String[] getRandomKeys(int amount) {
+    String[] keys = new String[amount];
+    for (int i = 0; i < amount; i++) {
+      keys[i] = getRandomString(new Random().nextInt(10));
+    }
+    return keys;
+  }
+
+  private static String getRandomString(int length) {
+    String alpha = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+    StringBuilder value = new StringBuilder();
+    for (int i = 0; i < length; i++) {
+      value.append(alpha.charAt(new Random().nextInt(alpha.length())));
+    }
+    return value.toString();
   }
 }
