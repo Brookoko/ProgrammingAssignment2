@@ -116,10 +116,10 @@ public class HashTableTests {
     MyHashTable<String, Integer> myHashTable = new MyHashTable<>(1);
     assertEquals(1, myHashTable.capacity);
     myHashTable.put("A", 1);
-    assertEquals(2, myHashTable.capacity);
+    assertEquals(1, myHashTable.capacity);
     myHashTable.put("B", 2);
-    assertEquals(4, myHashTable.capacity);
+    assertEquals(2, myHashTable.capacity);
     myHashTable.put("C", 3);
-    assertEquals(8, myHashTable.capacity);
+    assertEquals(4, myHashTable.capacity);
   }
 }
