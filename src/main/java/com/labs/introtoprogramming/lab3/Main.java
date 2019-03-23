@@ -112,8 +112,9 @@ public class Main {
     while ((token = scanner.nextLine()) != null) {
       if (token.equals(TOKEN_TO_LEAVE)) return;
       String def = findWordInDictionary(token, dict);
-      if (def == null) System.out.println("Sorry " + token + " cannot be found");
-      else {
+      if (def == null) {
+        System.out.printf("Sorry %s cannot be found", token);
+      } else {
         System.out.println(token);
         System.out.println(def);
       }
