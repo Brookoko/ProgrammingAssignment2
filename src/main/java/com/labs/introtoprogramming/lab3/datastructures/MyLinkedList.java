@@ -56,10 +56,7 @@ public class MyLinkedList<T> implements MyListInterface<T> {
       throw new IndexOutOfBoundsException();
     }
 
-    MyLinkedListNode<T> cursor = front;
-    for (int i = 0; i < size - index - 1; i++) {
-      cursor = cursor.next;
-    }
+    MyLinkedListNode<T> cursor = getNode(index);
 
     cursor.element = element;
   }
@@ -100,12 +97,8 @@ public class MyLinkedList<T> implements MyListInterface<T> {
       throw new IndexOutOfBoundsException();
     }
 
-    MyLinkedListNode<T> prev = null;
-    MyLinkedListNode<T> cursor = front;
-    for (int i = 0; i < size - index - 1; i++) {
-      prev = cursor;
-      cursor = cursor.next;
-    }
+    MyLinkedListNode<T> prev = getNode(index + 1);
+    MyLinkedListNode<T> cursor = getNode(index);
 
     size--;
 
