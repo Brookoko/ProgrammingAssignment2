@@ -12,17 +12,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
-  private static MyHashTable<String, String> dictionary;
-  private static final String DELIMITER = "----------------------------------------------------------------";
-  private static final String INPUT_FILE_NAME = "dict_processed.txt";
+  static final String DELIMITER = "----------------------------------------------------------------";
+  private static final String INPUT_FILE_NAME = "tests.txt";
   private static final int DICTIONARY_CAPACITY= 100000;
   private static final String TOKEN_TO_LEAVE = ":q";
 
   public static void main(String[] args) {
-    dictionary = new MyHashTable<>(DICTIONARY_CAPACITY);
+    MyHashTable<String, String> dictionary = new MyHashTable<>(DICTIONARY_CAPACITY);
     File file = new File(INPUT_FILE_NAME);
     loadToDictionary(file, dictionary);
-    processUserInput();
+    processUserInput(dictionary);
   }
 
   /**
@@ -48,21 +47,14 @@ public class Main {
    * @param dict hash table to which load words
    * @throws IOException if stream read failed
    */
-  private static void loadToDictionary(InputStream in, MyHashTable<String, String> dict) throws IOException {
+  static void loadToDictionary(InputStream in, MyHashTable<String, String> dict) throws IOException {
     BufferedReader bf = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
     String line;
     String token = "";
     StringBuilder content = new StringBuilder();
     while ((line = bf.readLine()) != null) {
       if (isLineUpperCase(line)) {
-        if (!token.isEmpty() && content.length() != 0) {
-          if (dict.containsKey(token)) {
-            content.insert(0, DELIMITER)
-                    .insert(0, "\n")
-                    .insert(0, dict.get(token));
-          }
-          dict.put(token, content.toString());
-        }
+        addToDictionary(token, content, dict);
         token = line;
         content.setLength(0);
       } else if (!line.isEmpty()) {
@@ -70,7 +62,27 @@ public class Main {
                 .append(line);
       }
     }
+    addToDictionary(token, content, dict);
     bf.close();
+  }
+
+  /**
+   * Add new definition to dictionary
+   *
+   * @param token word to add
+   * @param content definition of word
+   * @param dict dictionary to add
+   */
+  static void addToDictionary(String token, StringBuilder content, MyHashTable<String, String> dict) {
+    if (!token.isEmpty() && content.length() != 0) {
+      if (dict.containsKey(token)) {
+        content.insert(0, DELIMITER)
+                .insert(0, "\n")
+                .insert(0, dict.getOrDefault(token, ""));
+        dict.remove(token);
+      }
+      dict.put(token, content.toString());
+    }
   }
 
   /**
@@ -79,7 +91,7 @@ public class Main {
    * @param line string to be checked
    * @return true if string consist only of uppercase characters
    */
-  private static boolean isLineUpperCase(String line) {
+  static boolean isLineUpperCase(String line) {
     if (line.isEmpty()) return false;
     for (char c : line.toCharArray()) {
       if (Character.isLowerCase(c)) return false;
@@ -91,7 +103,7 @@ public class Main {
    * Process user input to get word definition from dictionary
    *
    */
-  private static void processUserInput() {
+  private static void processUserInput(MyHashTable<String, String> dict) {
     Scanner scanner = new Scanner(System.in);
     String token;
     System.out.println("Print :q to leave");
@@ -99,7 +111,7 @@ public class Main {
 
     while ((token = scanner.nextLine()) != null) {
       if (token.equals(TOKEN_TO_LEAVE)) return;
-      String def = findWordInDictionary(token);
+      String def = findWordInDictionary(token, dict);
       if (def == null) System.out.println("Sorry " + token + " cannot be found");
       else {
         System.out.println(token);
@@ -115,7 +127,7 @@ public class Main {
    * @param word word to search
    * @return definition of word in dictionary or null if it is not there
    */
-  private static String findWordInDictionary(String word) {
-    return dictionary.getOrDefault(word.toUpperCase(), null);
+  private static String findWordInDictionary(String word, MyHashTable<String, String> dict) {
+    return dict.getOrDefault(word.toUpperCase(), null);
   }
 }
