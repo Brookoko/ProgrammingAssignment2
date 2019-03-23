@@ -15,6 +15,7 @@ import java.util.Optional;
 public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   private static final int DEFAULT_CAPACITY = 100;
+  private static final int SCALE_FACTOR = 2;
 
   private class MyHashTableElement<T, E> {
     T key;
@@ -28,10 +29,12 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   private MyLinkedList<MyHashTableElement<K, V>>[] arr;
   private int size = 0;
+  private int capacity;
 
   /** Creates hash table with specified capacity. */
   public MyHashTable(int capacity) {
     // noinspection unchecked
+    this.capacity = capacity;
     this.arr = (MyLinkedList<MyHashTableElement<K, V>>[]) new MyLinkedList[capacity];
   }
 
@@ -42,6 +45,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void put(K key, V value) {
+    if (size >= capacity / SCALE_FACTOR) resize(capacity * SCALE_FACTOR);
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
@@ -93,6 +97,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void remove(K key) {
+    if (size <= capacity / (4 * SCALE_FACTOR)) resize(capacity / (2 * SCALE_FACTOR));
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
@@ -131,5 +136,17 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
   @Override
   public int getSize() {
     return size;
+  }
+
+  private void resize(int capacity) {
+    MyHashTable<K, V> temp = new MyHashTable<>();
+    for (MyLinkedList<MyHashTableElement<K, V>> list : arr) {
+      for (MyHashTableElement<K, V> el : list) {
+        temp.put(el.key, el.value);
+      }
+    }
+
+    arr = temp.arr;
+    this.capacity = capacity;
   }
 }
