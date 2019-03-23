@@ -110,4 +110,16 @@ public class HashTableTests {
     assertEquals(0, myHashTable.getSize());
     assertFalse(myHashTable.containsKey("a"));
   }
+
+  @Test
+  public void testResize() {
+    MyHashTable<String, Integer> myHashTable = new MyHashTable<>(1);
+    assertEquals(1, myHashTable.capacity);
+    myHashTable.put("A", 1);
+    assertEquals(2, myHashTable.capacity);
+    myHashTable.put("B", 2);
+    assertEquals(4, myHashTable.capacity);
+    myHashTable.put("C", 3);
+    assertEquals(8, myHashTable.capacity);
+  }
 }
