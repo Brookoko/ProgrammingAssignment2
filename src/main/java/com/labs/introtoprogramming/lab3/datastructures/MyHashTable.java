@@ -18,6 +18,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
   private static final int DEFAULT_CAPACITY = 100;
   private static final int SCALE_FACTOR = 2;
   private static final double LOAD_FACTOR_TO_RESIZE = 0.8;
+  private static final double LOAD_FACTOR_TO_DECREASE = 0.2;
 
   private class MyHashTableElement<T, E> {
     T key;
@@ -99,7 +100,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void remove(K key) {
-    if (size > 0 && size <= capacity * 0.25 * SCALE_FACTOR) resize(capacity / (2 * SCALE_FACTOR));
+    if (size > 0 && size <= capacity * LOAD_FACTOR_TO_DECREASE) resize(capacity / (2 * SCALE_FACTOR));
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
