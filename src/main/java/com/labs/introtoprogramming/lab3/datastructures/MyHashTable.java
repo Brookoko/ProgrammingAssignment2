@@ -57,6 +57,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
       arr[pos] = new MyLinkedList<>();
     }
 
+    remove(key);
     arr[pos].add(new MyHashTableElement<>(key, value));
     size++;
   }
@@ -102,7 +103,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
 
   @Override
   public void remove(K key) {
-    if (size > 0 && size <= capacity * LOAD_FACTOR_TO_DECREASE) {
+    if (size > DEFAULT_CAPACITY && size <= capacity * LOAD_FACTOR_TO_DECREASE) {
       resize(capacity / (2 * SCALE_FACTOR));
     }
     int pos = Math.abs(key.hashCode() % arr.length);
@@ -146,7 +147,7 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
   }
 
   private void resize(int capacity) {
-    MyHashTable<K, V> temp = new MyHashTable<>();
+    MyHashTable<K, V> temp = new MyHashTable<>(capacity);
     for (MyLinkedList<MyHashTableElement<K, V>> list : arr) {
       if (list != null) {
         for (MyHashTableElement<K, V> el : list) {

@@ -24,6 +24,16 @@ public class HashTableTests {
   }
 
   @Test
+  public void testPutSameKeys() {
+    MyHashTable<String, Integer> myHashTable = new MyHashTable<>();
+    myHashTable.put("a", 1);
+    myHashTable.put("a", 2);
+    myHashTable.put("a", 3);
+    assertEquals(1, myHashTable.getSize());
+    assertEquals(3, myHashTable.get("a").orElseThrow(AssertionError::new).intValue());
+  }
+
+  @Test
   public void testGetNonExistingKey() {
     MyHashTable<String, Integer> myHashTable = new MyHashTable<>();
     assertEquals(0, myHashTable.getSize());
