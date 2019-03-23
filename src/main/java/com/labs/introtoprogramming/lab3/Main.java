@@ -18,7 +18,7 @@ public class Main {
   static final String DELIMITER =
           "----------------------------------------------------------------";
   private static final String INPUT_FILE_NAME = "dict_processed.txt";
-  private static final int DICTIONARY_CAPACITY = 100000;
+  private static final int DICTIONARY_CAPACITY = 100;
   private static final String TOKEN_TO_LEAVE = ":q";
 
   /**

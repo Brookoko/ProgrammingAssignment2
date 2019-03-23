@@ -52,16 +52,22 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
       resize(capacity * SCALE_FACTOR);
     }
 
-    remove(key);
-
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
       arr[pos] = new MyLinkedList<>();
     }
 
-    arr[pos].add(new MyHashTableElement<>(key, value));
+    for (MyHashTableElement<K, V> e : arr[pos]) {
+      if (e.key.equals(key)) {
+        e.value = value;
+        return;
+      }
+    }
+
     size++;
+
+    arr[pos].add(new MyHashTableElement<>(key, value));
   }
 
   @Override
