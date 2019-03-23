@@ -11,7 +11,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -94,7 +95,7 @@ public class Main {
       if (dict.containsKey(token)) {
         content.insert(0, DELIMITER)
                 .insert(0, "\n")
-                .insert(0, dict.getOrDefault(token, ""));
+                .insert(0, dict.getOrDefault(token, Collections.singletonList("")).get(0));
         dict.remove(token);
       }
       dict.put(token, content.toString());
@@ -157,11 +158,13 @@ public class Main {
         return;
       }
 
-      Optional<String> def = findWordInDictionary(token, dict);
-      if (!def.isPresent()) {
+      List<String> def = findWordInDictionary(token, dict);
+      if (def.size() == 0) {
         defOut.printf("Sorry %s cannot be found%n", token);
       } else {
-        defOut.printf("%s; %s%n", token, def.get());
+        StringBuilder defBuilder = new StringBuilder();
+        def.forEach(defBuilder::append);
+        defOut.printf("%s; %s%n", token, defBuilder.toString());
       }
       msgOut.print("Type a word to get definition: ");
     }
@@ -180,13 +183,15 @@ public class Main {
           PrintStream defOut
   ) {
     Arrays.stream(sentence).forEach(word -> {
-      Optional<String> def = findWordInDictionary(word, dict);
-      if (!def.isPresent()) {
+      List<String> def = findWordInDictionary(word, dict);
+      if (def.size() == 0) {
         defOut.printf("%s; not found%n", word);
         return;
       }
 
-      defOut.printf("%s; %s%n", word, def.get());
+      StringBuilder str = new StringBuilder();
+      def.forEach(str::append);
+      defOut.printf("%s; %s%n", word, str);
     });
   }
 
@@ -196,8 +201,8 @@ public class Main {
    * @param word word to search
    * @return definition of word in dictionary or empty optional if it is not there
    */
-  private static Optional<String> findWordInDictionary(String word,
-                                                       MyHashTable<String, String> dict) {
+  private static List<String> findWordInDictionary(String word,
+                                                   MyHashTable<String, String> dict) {
     return dict.get(word.toUpperCase());
   }
 }

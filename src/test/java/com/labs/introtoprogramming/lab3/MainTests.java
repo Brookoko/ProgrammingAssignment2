@@ -12,6 +12,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import org.junit.Test;
@@ -43,8 +44,8 @@ public class MainTests {
             dict
     );
     assertEquals(2, dict.getSize());
-    assertEquals("\nDef: something", dict.getOrDefault("A", null));
-    assertEquals("\nDef: else", dict.getOrDefault("B", null));
+    assertEquals("\nDef: something", dict.getOrDefault("A", null).get(0));
+    assertEquals("\nDef: else", dict.getOrDefault("B", null).get(0));
   }
 
   @Test
@@ -76,7 +77,7 @@ public class MainTests {
     );
     assertEquals(1, dict.getSize());
     assertEquals("\nDef: something\n" + Main.DELIMITER + "\nDef: else",
-            dict.getOrDefault("A", null));
+            dict.getOrDefault("A", null).get(0));
   }
 
   @Test
@@ -84,7 +85,7 @@ public class MainTests {
     MyHashTable<String, String> dict = new MyHashTable<>();
     Main.addToDictionary("A", new StringBuilder("1"), dict);
     assertEquals(1, dict.getSize());
-    assertEquals("1", dict.getOrDefault("A", ""));
+    assertEquals("1", dict.getOrDefault("A", Collections.singletonList("")).get(0));
   }
 
   @Test
@@ -107,7 +108,7 @@ public class MainTests {
     Main.addToDictionary("A", new StringBuilder("1"), dict);
     Main.addToDictionary("A", new StringBuilder("2"), dict);
     assertEquals(1, dict.getSize());
-    assertEquals("1\n" + Main.DELIMITER  + "2", dict.getOrDefault("A", ""));
+    assertEquals("1\n" + Main.DELIMITER  + "2", dict.getOrDefault("A", Collections.singletonList("")).get(0));
   }
 
   @Test
