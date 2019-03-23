@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -122,20 +123,31 @@ public class Main {
    */
   private static void processUserInput(MyHashTable<String, String> dict) {
     Scanner scanner = new Scanner(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-    String token;
     System.out.println("Print :q to leave");
-    System.out.print("\nType a sentence to get definition: ");
+    System.out.print("Type a sentence to get definition: ");
+    Arrays.stream(scanner.nextLine().split(" ")).forEach(word -> {
+      String def = findWordInDictionary(word, dict);
+      if (def == null) {
+        System.out.printf("%n%s; not found%n", word);
+        return;
+      }
 
+      System.out.printf("%n%s; %s", word, def);
+    });
+
+    System.out.print("\nType a word to get definition: ");
+    String token;
     while ((token = scanner.nextLine()) != null) {
-      if (token.equals(TOKEN_TO_LEAVE)) { return; }
+      if (token.equals(TOKEN_TO_LEAVE)) {
+        return;
+      }
       String def = findWordInDictionary(token, dict);
       if (def == null) {
-        System.out.printf("Sorry %s cannot be found", token);
+        System.out.printf("Sorry %s cannot be found%n", token);
       } else {
-        System.out.println(token);
-        System.out.println(def);
+        System.out.printf("%s; %s%n", token, def);
       }
-      System.out.print("\nType a sentence to get definition: ");
+      System.out.print("Type a word to get definition: ");
     }
   }
 
