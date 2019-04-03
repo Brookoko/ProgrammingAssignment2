@@ -1,5 +1,8 @@
 package com.labs.introtoprogramming.lab3.datastructures;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -58,33 +61,28 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
       arr[pos] = new MyLinkedList<>();
     }
 
-    for (MyHashTableElement<K, V> e : arr[pos]) {
-      if (e.key.equals(key)) {
-        e.value = value;
-        return;
-      }
-    }
-
     size++;
 
     arr[pos].add(new MyHashTableElement<>(key, value));
   }
 
   @Override
-  public Optional<V> get(K key) {
+  public List<V> get(K key) {
     int pos = Math.abs(key.hashCode() % arr.length);
 
     if (arr[pos] == null) {
-      return Optional.empty();
+      return Collections.emptyList();
     }
+
+    List<V> result = new ArrayList<>();
 
     for (MyHashTableElement<K, V> element : arr[pos]) {
       if (element.key.equals(key)) {
-        return Optional.of(element.value);
+        result.add(element.value);
       }
     }
 
-    return Optional.empty();
+    return result;
   }
 
   @Override
@@ -105,8 +103,12 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
   }
 
   @Override
-  public V getOrDefault(K key, V defaultValue) {
-    return get(key).orElse(defaultValue);
+  public List<V> getOrDefault(K key, List<V> defaultValue) {
+    List<V> values = get(key);
+    if (values.size() == 0) {
+      return defaultValue;
+    }
+    return values;
   }
 
   @Override
@@ -124,7 +126,6 @@ public class MyHashTable<K, V> implements MyHashTableInterface<K, V> {
     for (int i = 0; i < arr[pos].getSize(); i++) {
       if (arr[pos].get(i).key.equals(key)) {
         indexOfKey = i;
-        break;
       }
     }
 

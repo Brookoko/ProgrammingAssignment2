@@ -1,5 +1,6 @@
 package com.labs.introtoprogramming.lab3.datastructures;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,7 +26,7 @@ public interface MyHashTableInterface<K, V> {
    * @param key key to get value for
    * @return value for this key
    */
-  public Optional<V> get(K key);
+  public List<V> get(K key);
 
   /**
    * Get value by key, or default value of no such key found in this hash table.
@@ -34,7 +35,7 @@ public interface MyHashTableInterface<K, V> {
    * @param defaultValue value to return if key does not exist in this hash table
    * @return value for this key
    */
-  public V getOrDefault(K key, V defaultValue);
+  public List<V> getOrDefault(K key, List<V> defaultValue);
 
   /**
    * Remove key from hash table.
