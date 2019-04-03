@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -32,6 +33,9 @@ public class Main {
     File file = new File(INPUT_FILE_NAME);
     loadToDictionary(file, dictionary);
     processUserInput(dictionary);
+    
+    long res = benchmark(1000000);
+    System.out.println(res);
   }
 
   /**
@@ -204,5 +208,58 @@ public class Main {
   private static List<String> findWordInDictionary(String word,
                                                    MyHashTable<String, String> dict) {
     return dict.get(word.toUpperCase());
+  }
+
+  /**
+   * Calculate average time of MyHashMap.get()
+   *
+   * @param testNum number of test runs
+   * @return average time of get method
+   */
+  private static long benchmark(int testNum) {
+    MyHashTable<String, Integer> table = new MyHashTable<>();
+    String[] keys = getRandomKeys(testNum);
+    long[] time = new long[testNum];
+
+    for (int i = 0; i < testNum; i++) {
+      table.put(keys[i], i);
+    }
+
+    for (int i = 0; i < testNum; i++) {
+      long start = System.nanoTime();
+      table.get(keys[i]);
+      time[i] = System.nanoTime() - start;
+    }
+
+    return Arrays.stream(time).sum() / testNum;
+  }
+
+  /**
+   * Create array of random string of alphabetic characters.
+   *
+   * @param amount amount of string in array
+   * @return array of random string
+   */
+  static String[] getRandomKeys(int amount) {
+    String[] keys = new String[amount];
+    for (int i = 0; i < amount; i++) {
+      keys[i] = getRandomString(new Random().nextInt(10));
+    }
+    return keys;
+  }
+
+  /**
+   * Create random string of alphabetic characters.
+   *
+   * @param length length of string
+   * @return string of random alphabetic characters
+   */
+  static String getRandomString(int length) {
+    String alpha = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+    StringBuilder value = new StringBuilder();
+    for (int i = 0; i < length; i++) {
+      value.append(alpha.charAt(new Random().nextInt(alpha.length())));
+    }
+    return value.toString();
   }
 }
